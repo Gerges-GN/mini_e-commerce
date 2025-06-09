@@ -1,18 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { PRODUCTS_URL } from "../config";
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
-  useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setProduct(res);
-      });
-  }, []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  console.log(product);
+  useEffect(() => {
+    fetch(`${PRODUCTS_URL}/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((res) => setProduct(res))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-dvh text-5xl ">
+        <p>Loading products...</p>
+      </div>
+    );
+  if (error) return <p className="text-red-500 text-3xl p-5">Error: {error}</p>;
 
   return (
     <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased min-h-dvh">
