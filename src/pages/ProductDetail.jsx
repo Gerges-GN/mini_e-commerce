@@ -1,97 +1,69 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PRODUCTS_URL } from "../config";
+import { useProducts } from "../context/ProductsContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCart } from "../context/CartContext";
 
 function ProductDetail() {
   const { id } = useParams();
-  const [product, setProduct] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { products, loading, error } = useProducts();
+  const { addToCart } = useCart();
 
-  useEffect(() => {
-    fetch(`${PRODUCTS_URL}/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((res) => setProduct(res))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const product = products.find((p) => p.id == id);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-dvh text-5xl ">
         <p>Loading products...</p>
       </div>
     );
+  }
+
   if (error) return <p className="text-red-500 text-3xl p-5">Error: {error}</p>;
 
+  if (!product) return <p>404. Product Not Found</p>;
+
   return (
-    <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased min-h-dvh">
-      <div class="max-w-screen-xl px-4 m-auto 2xl:px-0">
-        <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          <div class="shrink-0 max-w-md lg:max-w-lg mx-auto p-7 bg-white rounded-2xl">
-            <img class="w-full " src={product.image} alt="" />
+    <section className="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased min-h-dvh">
+      <div className="max-w-screen-xl px-4 m-auto 2xl:px-0">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+          <div className="shrink-0 max-w-md lg:max-w-lg mx-auto p-7 bg-white rounded-2xl">
+            <img className="w-full " src={product.image} alt={product.title} />
           </div>
 
-          <div class="mt-6 sm:mt-8 lg:mt-0">
-            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+          <div className="mt-6 sm:mt-8 lg:mt-0">
+            <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
               {product.title}
             </h1>
-            <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-              <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+            <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
+              <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
                 {product.price}$
               </p>
             </div>
 
-            <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                <svg
-                  class="w-5 h-5 -ms-2 me-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-                  />
-                </svg>
+            <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+              <button className="flex items-center justify-center gap-1.5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                <FontAwesomeIcon
+                  icon="fa-solid fa-heart"
+                  className="text-lg "
+                />
                 Add to favorites
               </button>
 
-              <button class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none rounded-lg hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:text-white ">
-                <svg
-                  class="w-5 h-5 -ms-2 me-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
-                  />
-                </svg>
+              <button
+                onClick={() => addToCart(product)}
+                className="flex items-center justify-center gap-1.5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none rounded-lg hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:text-white "
+              >
+                <FontAwesomeIcon
+                  icon="fa-solid fa-cart-shopping"
+                  className="text-lg"
+                />
                 Add to cart
               </button>
             </div>
 
-            <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+            <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
-            <p class="mb-6 text-gray-500 dark:text-gray-400">
+            <p className="mb-6 text-gray-500 dark:text-gray-400">
               {product.description}
             </p>
           </div>

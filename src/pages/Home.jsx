@@ -1,22 +1,9 @@
-import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-import { PRODUCTS_URL } from "../config";
+import { useProducts } from "../context/ProductsContext";
+
 
 function Home() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch(PRODUCTS_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((res) => setProducts(res))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+  const {products, loading, error} = useProducts();
 
   if (loading)
     return (
@@ -29,7 +16,7 @@ function Home() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-5 py-7 x">
       {products.map((item) => (
-        <ProductCard key={item.id} items={item} />
+        <ProductCard key={item.id} product={item} />
       ))}
     </div>
   );

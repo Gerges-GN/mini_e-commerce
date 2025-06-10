@@ -1,5 +1,7 @@
-import React from "react";
+
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 function Navbar() {
   return (
@@ -18,11 +20,11 @@ function Navbar() {
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <Link to="cart">
               <button
-                type="button" 
+                type="button"
                 aria-label="Go to Cart"
-                className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+                className="text-gray-900 dark:text-white text-2xl text-center hover:dark:text-blue-500 hover:text-blue-700 duration-150"
               >
-                Cart
+                <FontAwesomeIcon icon="fa-solid fa-shopping-cart" />
               </button>
             </Link>
             <button
@@ -41,9 +43,9 @@ function Navbar() {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>
