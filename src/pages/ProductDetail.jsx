@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom";
 import { useProducts } from "../context/ProductsContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 function ProductDetail() {
   const { id } = useParams();
   const { products, loading, error } = useProducts();
   const { addToCart } = useCart();
+  const [fav, setFav] = useState(false)
 
   const product = products.find((p) => p.id == id);
 
@@ -41,10 +43,10 @@ function ProductDetail() {
             </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button className="flex items-center justify-center gap-1.5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+              <button onClick={() => setFav(!fav)} className="flex items-center justify-center gap-1.5 py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                 <FontAwesomeIcon
                   icon="fa-solid fa-heart"
-                  className="text-lg "
+                  className={`${ fav && "text-red-500"}  text-lg` }
                 />
                 Add to favorites
               </button>
