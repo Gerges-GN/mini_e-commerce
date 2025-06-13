@@ -8,7 +8,7 @@ function ProductCard({ product }) {
 
   return (
     <div className="rounded-xl max-w-80 sm:min-w-80 max-h-[600px] mb-5 drop-shadow-gray-300 hover:drop-shadow-gray-400 drop-shadow-xl duration-150 bg-neutral-200 dark:bg-gray-900">
-      <Link to={`product/${id}`}>
+      <Link to={`/product/${id}`}>
         <div className="overflow-hidden h-80 w-full bg-white rounded-t-xl p-3">
           <img className=" h-full m-auto" src={image} alt="" />
         </div>

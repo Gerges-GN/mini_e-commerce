@@ -1,9 +1,12 @@
-
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { useCart } from "../context/CartContext";
 
 function Navbar() {
+  const { cart } = useCart();
+
+  const numOfProducts = cart.length;
+
   return (
     <div className="min-h-16">
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -22,9 +25,17 @@ function Navbar() {
               <button
                 type="button"
                 aria-label="Go to Cart"
-                className="text-gray-900 dark:text-white text-2xl text-center hover:dark:text-blue-500 hover:text-blue-700 duration-150"
+                className="relative text-center text-blue-700 dark:text-white text-2xl"
               >
-                <FontAwesomeIcon icon="fa-solid fa-shopping-cart" />
+                <FontAwesomeIcon
+                  icon="fa-solid fa-shopping-cart"
+                  className="hover:dark:text-blue-500 hover:text-gray-900 duration-150"
+                />
+                {numOfProducts > 0 && (
+                  <span className="absolute -right-1.5 -top-0.5 text-xs leading-[15px] w-4 h-4 bg-gray-900 dark:bg-blue-700 text-white rounded-full">
+                    {numOfProducts}
+                  </span>
+                )}
               </button>
             </Link>
             <button

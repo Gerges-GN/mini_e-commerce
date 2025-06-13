@@ -1,9 +1,8 @@
 import ProductCard from "../components/ProductCard";
 import { useProducts } from "../context/ProductsContext";
 
-
 function Home() {
-  const {products, loading, error} = useProducts();
+  const { products, loading, error } = useProducts();
 
   if (loading)
     return (
@@ -14,10 +13,12 @@ function Home() {
   if (error) return <p className="text-red-500 text-3xl p-5">Error: {error}</p>;
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-5 py-7 ">
-      {products.map((item) => (
-        <ProductCard key={item.id} product={item} />
-      ))}
+    <div className="flex flex-wrap items-center justify-center">
+      <div className="flex flex-wrap items-center justify-center gap-5 py-7 max-w-screen-xl">
+        {products.map((item) => (
+          <ProductCard key={item.id} product={item} />
+        ))}
+      </div>
     </div>
   );
 }
