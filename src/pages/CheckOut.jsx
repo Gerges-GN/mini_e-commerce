@@ -95,7 +95,7 @@ export default function CheckOut() {
           </div>
 
           <div className="flex-1 overflow-y-auto my-3 pr-1">
-            {cart.map((item) => (
+            {cart.length == 0 && (<p className="text-center p-5">Nothing To Show Here!</p>) || cart.map((item) => (
               <div
                 key={item.id}
                 className="grid grid-cols-12 gap-1.5 *:pt-2 *:pb-0.5 border-b"
@@ -107,7 +107,7 @@ export default function CheckOut() {
           </div>
 
           <div className="grid grid-cols-10 gap-1.5 *:pt-2 *:pb-0.5 text-lg font-semibold">
-            <p className="col-span-8 border-r">Total:</p>
+            <p className="col-span-8 border-r">Total Price</p>
             <p>${totalPrice.toFixed(2)}</p>
           </div>
         </section>

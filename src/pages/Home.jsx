@@ -13,7 +13,7 @@ function Home() {
   if (error) return <p className="text-red-500 text-3xl p-5">Error: {error}</p>;
 
   return (
-    <div className="flex flex-wrap items-center justify-center">
+    <div className="flex flex-wrap items-center justify-center p">
       <div className="flex flex-wrap items-center justify-center gap-5 py-7 max-w-screen-xl">
         {products.map((item) => (
           <ProductCard key={item.id} product={item} />
