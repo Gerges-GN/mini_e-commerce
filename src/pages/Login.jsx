@@ -70,11 +70,11 @@ function Login() {
               </button>
             </div>
           </form>
-          <div className="w-full text-left flex flex-wrap">
+          <div className="w-full text-left flex flex-wrap text-sm">
             <p>New user?</p>
             <Link
               to="/sign-up"
-              className="ml-2 font-semibold hover:text-blue-500 duration-150"
+              className="ml-1.5 font-semibold hover:text-blue-500 duration-150"
             >
               Create account now!
             </Link>

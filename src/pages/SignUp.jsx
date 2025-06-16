@@ -90,8 +90,8 @@ function SignUp() {
               </button>
             </div>
           </form>
-          <div className="w-full text-left flex flex-wrap">
-            <p>Already have an account ?</p>
+          <div className="w-full text-left flex flex-wrap  text-sm">
+            <p>Already have an account?</p>
             <Link
               to="/login"
               className="ml-2 font-semibold hover:text-blue-500 duration-150"

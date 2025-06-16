@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { PRODUCTS_URL } from "../config";
+import { getItems, setItems } from "../utils/localStorage";
 
 const ProductsContext = createContext();
 
@@ -7,6 +8,19 @@ export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [fav, setFav] = useState(getItems("fav") || []);
+
+  const addToFav = (id) => {
+    setFav((prev) => {
+      
+      const updated = prev.includes(id)
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id];
+
+      setItems("fav", updated);
+      return updated;
+    });
+  };
 
   useEffect(() => {
     fetch(PRODUCTS_URL)
@@ -21,7 +35,7 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProductsContext.Provider value={{ products, loading, error }}>
+    <ProductsContext.Provider value={{ products, loading, error, fav, addToFav }}>
       {children}
     </ProductsContext.Provider>
   );
